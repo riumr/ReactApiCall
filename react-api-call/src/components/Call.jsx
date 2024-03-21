@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function Call() {
   const [data, setData] = useState(null);
-  const apiKey = process.env.REACT_APP_SEOUL_API_KEY;
+  const apiKey = process.env.REACT_APP_API_KEY;
   useEffect(() => {
     fetchData();
   }, []);
