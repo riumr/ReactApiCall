@@ -10,17 +10,22 @@ export default function Call() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/광화문·덕수궁`);
-      setData(response.data['SeoulRtd.citydata_ppltn'][0]['AREA_PPLTN_MAX'])
-      console.log(response.data['SeoulRtd.citydata_ppltn'][0]['AREA_PPLTN_MAX'])
-      console.log(data)
+      const [response01,response02] = await Promise.all([
+        axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/광화문·덕수궁`),
+        axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/서울대공원`)
+      ])
+      setData({
+        data01:response01.data['SeoulRtd.citydata_ppltn'][0]['AREA_PPLTN_MAX'],
+        data02:response02.data['SeoulRtd.citydata_ppltn'][0]['AREA_PPLTN_MAX']
+      });
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
   return (
     <>
-      {data}
+      <div>{data.data01}</div>
+      <div>{data.data02}</div>
     </>
   )
 }
