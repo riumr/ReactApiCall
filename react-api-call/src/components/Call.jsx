@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
+import { placeList } from './PlaceList';
 
 export default function Call() {
   const [data, setData] = useState("");
@@ -10,6 +11,7 @@ export default function Call() {
 
   const fetchData = async () => {
     try {
+      const apiCallInList = `http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/${placeList}`
       const [response01,response02] = await Promise.all([
         axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/광화문·덕수궁`),
         axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/서울대공원`)
