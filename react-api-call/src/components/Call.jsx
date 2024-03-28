@@ -11,16 +11,12 @@ export default function Call() {
 
   const fetchData = async () => {
     try {
-      const apiCallInList = `http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/${placeList}`
-      const [response01,response02] = await Promise.all([
-        axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/광화문·덕수궁`),
-        axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/서울대공원`)
-      ])
-      setData({
-        data01:response01.data['SeoulRtd.citydata_ppltn'][0]['AREA_CONGEST_LVL'],
-        data02:response02.data['SeoulRtd.citydata_ppltn'][0]['AREA_CONGEST_LVL']
-      });
-      console.log(data.data01Max-data.data01Min)
+      for (const place of placeList) {
+        const response = axios.get(`http://openapi.seoul.go.kr:8088/${apiKey}/json/citydata_ppltn/1/5/${place}`);
+        setData({
+          data01:response.data['SeoulRtd.citydata_ppltn'][0]['AREA_CONGEST_LVL'],
+        });
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -28,7 +24,6 @@ export default function Call() {
   return (
     <>
       <div>{data.data01}</div>
-      <div>{data.data02}</div>
     </>
   )
 }
